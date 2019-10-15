@@ -23,7 +23,7 @@ for edge in edges(G) #On vérifie qu'aucun couple de sommets n'est dans le même
     @test connex(edge,parents) == false
 end
 
-union!(arete1,parents) #On ajoute l'arête 1 à parents
+union1!(arete1,parents) #On ajoute l'arête 1 à parents
 @test parents[name(node2)]==name(node1) #On vérifie que le parent de node2 est bien devenu node1
 @test parents[name(node1)]==name(node1)
 @test connex(arete1,parents) == true #on vérifie le fonctionnement de la fonction connex
@@ -32,7 +32,7 @@ union!(arete1,parents) #On ajoute l'arête 1 à parents
 @test connex(arete4,parents) == false
 @test connex(arete5,parents) == false
 
-union!(arete2,parents)
+union1!(arete2,parents)
 @test parents[name(node4)]==name(node2)
 @test parents[name(node2)]==name(node1)
 @test parents[name(node1)]==name(node1)
@@ -48,7 +48,7 @@ union!(arete2,parents)
 @test root(node1,parents)==name(node1)
 @test root(node3,parents)==name(node3)
 
-union!(arete3,parents) #Ajout de la dernière arête possible
+union1!(arete3,parents) #Ajout de la dernière arête possible
 
 #Vérification des racines de chaque noeud, dans le nouveau "parents"
 @test root(node4,parents)==name(node1)
