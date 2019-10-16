@@ -1,3 +1,5 @@
+
+include(joinpath(@__DIR__,"..","phase1","read_stsp.jl"))
 """read_graph_stsp(filename)
 
 Construct a graph from given stsp file.

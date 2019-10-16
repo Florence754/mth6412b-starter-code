@@ -10,7 +10,7 @@ using Printf
 # List of stsp instances
 const STSP_DIR = joinpath(@__DIR__,"..","..","instances", "stsp")
 const STSP = readdir(STSP_DIR)
-
+const GRAPHS = [read_graph_stsp(joinpath(STSP_DIR, finst)) for finst in STSP]
 """
     run_kruskal(graphs)
 
