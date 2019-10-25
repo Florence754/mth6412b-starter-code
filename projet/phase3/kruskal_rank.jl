@@ -4,10 +4,9 @@ include(joinpath(here,"..","phase1","node.jl"))
 include(joinpath(here,"..","phase1","edge.jl"))
 include(joinpath(here,"..","phase1","graph.jl"))
 
-"""
-Fonction renvoyant la racine d'un noeud node dans une forêt
-d'arborescence représenté par un dictionaire dict
-
+"""Renvoie la racine du  noeud `node`
+Calcule recursivement la racine de `node, selon la relation de parents donnée
+par le dictionnaire `dict`.
 """
 function root(node::Node{T},dict::Dict{String,String}) where T
     p = name(node)
@@ -18,29 +17,23 @@ function root(node::Node{T},dict::Dict{String,String}) where T
     return(p)
 end
 
-"""
-Fonction renvoyant un booléen true si les deux noeuds de l'arête
+"""Renvoie un booléen true si les deux noeuds de l'arête
  edge sont dans le même ensemble connexe et false autrement
-
 """
-function connex(edge::Edge{T},dict::Dict{String,String}) where T
-        #On récupère dans node1 et node2 les deux noeuds contenus dans l'arête edge
-    node1 = data(edge)[1]
-    node2 = data(edge)[2]
-        #Si ces deux noeuds ont la même racine, ils sont dans le même ensemble connexe, sinon non
+function connex(node1::Node{T}, node2::Node{T},dict::Dict{String,String}) where T
+     #Si ces deux noeuds ont la même racine, ils sont dans le
+        #même ensemble connexe, sinon non
     return(root(node1,dict) == root(node2,dict))
 end
 
-"""
-Fonction réalisant l'union de deux arborescences, par l'arête edge,
+"""Réalise l'union de deux arborescences, en utilisant le rang,
  et dans la forêt représentée par le dictionaire dict
- """
-function union_rank!(edge::Edge,dict::Dict{String,String},rank::Dict{String,Int})
-    #On récupère dans node1 et node2 les deux noeuds contenus dans l'arête edge
-    node1 = data(edge)[1]
-    node2 = data(edge)[2]
+"""
+function union_rank!(node1::Node{T}, node2::Node{T}, dict::Dict{String,String}, rank::Dict{String,Int}) where T
+    # racine des noeuds
     root1 = root(node1,dict)
     root2 = root(node2,dict)
+    # rang des racines
     rank1 = rank[root1]
     rank2 = rank[root2]
     if rank1 == rank2
@@ -54,11 +47,9 @@ function union_rank!(edge::Edge,dict::Dict{String,String},rank::Dict{String,Int}
 end
 
 
+"""Renvoie un arbre de recouvrement de coût minimal associé au
+ graphe G, en utilisant l'algorithme de Kruskal et l'union par le rang.
 """
-Fonction renvoyant un arbre de recouvrement de coût minimal associé au
- graphe G, en utilisant l'algorithme de Kruskal
-
- """
 function kruskal_rank(G::Graph)
      E = edges(G)
      #Tri des arêtes par poids
@@ -70,11 +61,11 @@ function kruskal_rank(G::Graph)
      G_construction=Graph("Arbre", nodes(G), Edge{Vector{Float64}}[])
      for e in E
          #Si les deux noeuds de l'arête e ne sont pas dans le même ensemble connexe
-        if connex(e,parents) == false
+        if connex(data(e)[1], data(e)[2], parents) == false
             #On ajoute cette arête au graphe de construction
             add_edge!(G_construction,e)
             #On ajoute cette arête à la forêt d'arborescence
-            union_rank!(e,parents,rank)
+            union_rank!(data(e)[1], data(e)[2], parents, rank)
         end
     end
     #Le graphe de construction obtenu est un arbre de recouvrement de G
