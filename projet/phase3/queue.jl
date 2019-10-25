@@ -65,6 +65,8 @@ end
 
 PriorityQueue{T}() where T = PriorityQueue(T[])
 
+
+items(q::AbstractQueue) = q.items
 """Retire et renvoie l'élément ayant la plus haute priorité."""
 function popfirst!(q::PriorityQueue)
     lowest = q.items[1]
