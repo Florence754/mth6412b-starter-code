@@ -18,9 +18,9 @@ function prim(G::Graph{T},root=nodes(G)[1]::Node{T}) where T
 
 
       parents = Dict(node => node for node in nodes(G))
+      node1=root
+      while is_empty(file)==false
 
-      while !is_empty(file)
-          for node1 in nodes(tree)
               for i in 1 : length(file)
                   node2 = data(items(file)[i])
                   weight2=priority(items(file)[i])
@@ -29,14 +29,15 @@ function prim(G::Graph{T},root=nodes(G)[1]::Node{T}) where T
                           priority!(items(file)[i],weights[[name(node1),name(node2)]])
                           parents[node2] = node1
                       end
-                  end
+                 end
 
-              end
+
           end
           item=popfirst!(file)
           node=data(item)
           add_node!(tree, node)
           add_edge!(tree, Edge((node, parents[node]), priority(item)))
+          node1=node
       end
      tree
 end
