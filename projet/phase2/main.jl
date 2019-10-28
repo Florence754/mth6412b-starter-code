@@ -9,6 +9,7 @@ include("kruskal.jl")
 filename = joinpath(here,"..","..","instances","stsp","bayg29.tsp")
 
 """read_graph_stsp(filename)
+
 Construct a graph from given stsp file.
 """
 function read_graph_stsp(filename::String)
