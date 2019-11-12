@@ -1,14 +1,14 @@
 here = @__DIR__
-include(joinpath(here,"..","phase1","node.jl"))
-include(joinpath(here,"..","phase1","node.jl"))
-include(joinpath(here,"..","phase1","edge.jl"))
-include(joinpath(here,"..","phase1","graph.jl"))
+include(joinpath(here, "..", "phase1", "node.jl"))
+include(joinpath(here, "..", "phase1", "node.jl"))
+include(joinpath(here, "..", "phase1", "edge.jl"))
+include(joinpath(here, "..", "phase1", "graph.jl"))
 
 """Renvoie la racine du  noeud `node`
 Calcule recursivement la racine de `node`, selon la relation de parents donnée
 par le dictionnaire `dict`.
 """
-function root(node::Node{T},dict::Dict{String,String}) where T
+function root(node::Node{T}, dict::Dict{String, String}) where T
     p = name(node)
     #Tant que le parent du noeud p est différent de lui-même, on remplace ce noeud par son parent
     while p != dict[p]
@@ -62,31 +62,26 @@ function union_rank!(node1::Node{T}, node2::Node{T}, dict::Dict{String,String}, 
             end
         end
     end
-
-
 end
-
-
-
 
 """Renvoie un arbre de recouvrement de coût minimal associé au
  graphe G, en utilisant l'algorithme de Kruskal et l'union par le rang et
  compression des chemins.
 """
-function kruskal(G::Graph)
-     E = edges(G)
+function kruskal(G::Graph) where T
+     E = copy(edges(G))
      #Tri des arêtes par poids
-     sort!(E, by = x -> weight(x))
+          sort!(E, by = weight)
 
-     parents=Dict(name(node) => name(node) for node in nodes(G))
-     rank=Dict(name(node) => 0 for node in nodes(G))
+     parents = Dict(name(node) => name(node) for node in nodes(G))
+     rank = Dict(name(node) => 0 for node in nodes(G))
      #Graphe contenant les noeuds de G, initialement sans arêtes
-     G_construction=Graph("Arbre", nodes(G), Edge{Vector{Float64}}[])
+     G_construction = Graph("Arbre", nodes(G), Edge{T}[])
      for e in E
          #Si les deux noeuds de l'arête e ne sont pas dans le même ensemble connexe
-        if connex(data(e)[1], data(e)[2], parents) == false
+        if !connex(data(e)[1], data(e)[2], parents)
             #On ajoute cette arête au graphe de construction
-            add_edge!(G_construction,e)
+            add_edge!(G_construction, e)
             #On ajoute cette arête à la forêt d'arborescence
             union_rank!(data(e)[1], data(e)[2], parents, rank)
         end
