@@ -68,7 +68,7 @@ end
  graphe G, en utilisant l'algorithme de Kruskal et l'union par le rang et
  compression des chemins.
 """
-function kruskal(G::Graph) where T
+function kruskal(G::Graph{T}) where T
      E = copy(edges(G))
      #Tri des arêtes par poids
           sort!(E, by = weight)
