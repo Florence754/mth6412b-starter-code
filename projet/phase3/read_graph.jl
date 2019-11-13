@@ -12,13 +12,13 @@ function read_graph_stsp(filename::String)
 
     # On ajoute les noueds un par un au graphe G
     if header["DISPLAY_DATA_TYPE"]=="None"
-        graph_nodes = Dict(i => [NaN,NaN] for i = 1 : parse(Int,header["DIMENSION"]))
+        graph_nodes = Dict(i => [NaN, NaN] for i = 1 : parse(Int,header["DIMENSION"]))
         for (i,nodes) in graph_nodes
-        add_node!(G, Node(string(i), nodes))
+            add_node!(G, Node(string(i), nodes))
         end
     else
-        graph_nodes = read_nodes(header,filename)
-        for (i,nodes) in graph_nodes
+        graph_nodes = read_nodes(header, filename)
+        for (i, nodes) in graph_nodes
             add_node!(G, Node(string(i), nodes))
         end
     end
