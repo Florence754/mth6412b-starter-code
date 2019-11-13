@@ -12,13 +12,10 @@ end
 Queue{T}() where T = Queue(T[])
 
 """Ajoute `item` à la fin de la file `s`."""
-function push!(q::AbstractQueue{T}, item::T) where T
-    push!(q.items, item)
-    q
-end
+ push!(q::AbstractQueue{T}, item::T) where T = push!(q.items, item)
 
 """Retire et renvoie l'objet du début de la file."""
-popfirst!(q::AbstractQueue) = popfirst!(q.items)
+popfirst!(q::AbstractQueue{T}) where T = popfirst!(q.items)
 
 """Indique si la file est vide."""
 is_empty(q::AbstractQueue) = length(q.items) == 0
@@ -39,15 +36,15 @@ mutable struct PriorityItem{T} <: AbstractPriorityItem{T}
 end
 
 function PriorityItem(priority::Real, data::T) where T
-    PriorityItem{T}(max(0, priority), data)
+    PriorityItem{T}(priority, data)
 end
 
 priority(p::PriorityItem) = p.priority
 
 data(p::PriorityItem) = p.data
 
-function priority!(p::PriorityItem, priority::Real)
-    p.priority = max(0, priority)
+function set_priority!(p::PriorityItem, priority::Real)
+    p.priority = priority
     p
 end
 
@@ -69,17 +66,13 @@ PriorityQueue{T}() where T = PriorityQueue(T[])
 items(q::AbstractQueue) = q.items
 """Retire et renvoie l'élément ayant la plus haute priorité."""
 function popfirst!(q::PriorityQueue)
-    lowest = q.items[1]
-    for item in q.items[2:end]
-        if item < lowest
-            lowest = item
-        end
-    end
-    idx = findall(x -> x == lowest, q.items)[1]
+    lowest = minimum(q)
+    idx = findfirst(x -> x == lowest, q.items)
     deleteat!(q.items, idx)
     lowest
 end
 
-import Base.maximum
+import Base.minimum
 
-maximum(q::AbstractQueue) = maximum(q.items)
+"""Renvoie le minimum d'une file"""
+minimum(q::AbstractQueue) = minimum(q.items)
