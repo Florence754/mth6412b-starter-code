@@ -18,11 +18,11 @@ parents=Dict(name(node) => name(node) for node in nodes(G))
 
 #Vérification du fonctionnement de la fonction Kruskal
 K=kruskal(G)
-typeof(K)==typeof(G)
+typeof(K) == typeof(G)
 
 total_weight = sum([weight(e) for e in edges(K)])
 
-@test total_weight==6 #On vérifie que l'arbre obtenu est bien de coût minimal
+@test total_weight == 6 #On vérifie que l'arbre obtenu est bien de coût minimal
 
 #On vérifie que K ne contient pas les aretes 4 et 5
 @test !(arete4 in edges(K))
@@ -30,12 +30,12 @@ total_weight = sum([weight(e) for e in edges(K)])
 
 
 #Vérification du fonctionnement de la fonction prim
-L=prim(G)
+L = prim(G)
 typeof(L)==typeof(G)
 
 total_weight = sum([weight(e) for e in edges(L)])
 
-@test total_weight==6 #On vérifie que l'arbre obtenu est bien de coût minimal
+@test total_weight == 6 #On vérifie que l'arbre obtenu est bien de coût minimal
 
 #On vérifie que K ne contient pas les aretes 4 et 5
 @test !(arete4 in edges(L))
