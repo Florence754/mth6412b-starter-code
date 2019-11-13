@@ -14,7 +14,7 @@ Exemple:
 """
 mutable struct Edge{T} <: AbstractEdge{T}
   data::Tuple{Node{T},Node{T}}
-  weight::Int
+  weight::Real
 end
 
 
