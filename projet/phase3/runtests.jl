@@ -14,13 +14,13 @@ arete4 = Edge((node1, node4), 4)
 arete5 = Edge((node3, node4), 5)
 G = Graph("Test graph", [node1, node2, node3, node4], [arete1, arete2, arete3, arete4, arete5])
 
-parents=Dict(name(node) => name(node) for node in nodes(G))
+parents = Dict(name(node) => name(node) for node in nodes(G))
 
 #Vérification du fonctionnement de la fonction Kruskal
-K=kruskal(G)
-typeof(K) == typeof(G)
+K = kruskal(G)
+@test typeof(K) == typeof(G)
 
-total_weight = sum([weight(e) for e in edges(K)])
+total_weight = sum(weight, edges(K))
 
 @test total_weight == 6 #On vérifie que l'arbre obtenu est bien de coût minimal
 
@@ -31,9 +31,9 @@ total_weight = sum([weight(e) for e in edges(K)])
 
 #Vérification du fonctionnement de la fonction prim
 L = prim(G)
-typeof(L)==typeof(G)
+@test typeof(L) == typeof(G)
 
-total_weight = sum([weight(e) for e in edges(L)])
+total_weight = sum(weight, edges(L))
 
 @test total_weight == 6 #On vérifie que l'arbre obtenu est bien de coût minimal
 
