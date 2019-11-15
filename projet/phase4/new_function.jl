@@ -136,7 +136,8 @@ function correction_stsp!(G::Graph)
     end
 end
 
-"""To do"""
+"""Renvoie le degré d'un noeud d'un gaphe.
+ Prend en argument un vecteur d'aretes 'edges' et le noeud 'node'"""
 function degree(edges::Array{Edge{T}}, node::Node{T}) where T
     degree=0
     for edge in edges
@@ -147,7 +148,7 @@ function degree(edges::Array{Edge{T}}, node::Node{T}) where T
     return degree
 end
 
-"""To do"""
+"""Trouve les degrés d'un noeud"""
 function find_onedegree_node(graph::Graph, travelnode::String, tracenode::String)
     neighbours = neighbourhood(graph)
     node_names = Dict(name(node) => node for node in nodes(graph))
@@ -162,7 +163,7 @@ function find_onedegree_node(graph::Graph, travelnode::String, tracenode::String
     return(travelnode)
 end
 
-"""To do"""
+"""Renvoie un dictionaire des voisins d'un noeud"""
 function neighbourhood(graph::Graph{T}) where T
     neighbours = Dict(name(node) => [] for node in nodes(graph))
     for edge in edges(graph)
@@ -198,7 +199,7 @@ function creat_cycle(tree::Graph{T}, root::Node{T}, weights::Dict{Tuple{String,S
 
 end
 
-"""Verifie si un arbre 1-arbre est un cycle"""
+"""Verifie si  1-arbre est un cycle"""
 function iscycle(G::Graph{T}) where T
     list_node = nodes(G)
     list_edge = edges(G)
