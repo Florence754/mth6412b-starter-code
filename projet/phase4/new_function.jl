@@ -181,7 +181,8 @@ end
 
 """Créee un cycle apartir d'un 1-arbre de racine 'root' et d'un dictionnaire
 de poids des aretes 'weights'. """
-function creat_cycle(tree::Graph{T}, root::Node{T}, weights::Dict{Tuple{String,String},Real}) where T
+function creat_cycle(tree::Graph{T}, root::Node{T}, weights::Dict{Tuple{String,String},Real},
+     method=2::Set([1,2])) where T
     cycle = Graph("cycle", [root], Edge{T}[])
     delete_node!(tree,root)
     n = length(nodes(tree))
@@ -195,8 +196,10 @@ function creat_cycle(tree::Graph{T}, root::Node{T}, weights::Dict{Tuple{String,S
         add_edge!(cycle, Edge((node1, node2), weights[(name(node1),name(node2))]))
         node1 = node2
     end
+    if method == 1
+        add_edge!(cycle, Edge((node1, root), weights[(name(node1),name(root))]))
+    end
     return cycle
-
 end
 
 """Verifie si  1-arbre est un cycle"""
