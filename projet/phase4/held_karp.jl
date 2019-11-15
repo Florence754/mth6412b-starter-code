@@ -1,5 +1,6 @@
-"""Renvoie un cycle hamiltonien de coût faible dans le graphe G"""
- function held_karp(G::Graph{T}, root = nodes(G)[1]::Node{T}, method = 1::Set([1,2]),
+"""Renvoie un cycle hamiltonien de coût faible dans le graphe G
+    method 1 pour Kruskal et 2 pour Prim"""
+ function held_karp(G::Graph{T}, root = nodes(G)[1]::Node{T}, method = 2::Set([1,2]),
                      itermax = 1000::Int, alpha = 0.1::Real) where T
      n = length(nodes(G))
      G2 = deepcopy(G) #graphe initialement identique à G, et dans lequel on modifiera le poids de chaque arête
@@ -19,7 +20,7 @@
      end
 
       if !iscycle(cycle)
-          cycle = creat_cycle(cycle, root, weights)
+          cycle = creat_cycle(cycle, root, weights, method)
      end
 
       for edge in edges(cycle)
