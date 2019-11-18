@@ -9,7 +9,7 @@
      for (child,parent) in parents
          push!(children[parent],child)
      end
-     nodesTree_copy = pre_order!(root, children, parents,nodes(G))
+     nodesTree_copy = pre_order(root, children, parents,nodes(G))
 
      cycle = Graph("cycle", [root], Edge{T}[])
 
