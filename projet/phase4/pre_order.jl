@@ -1,3 +1,5 @@
+"""Tri des noeuds d'un arbre en préordre
+"""
 function pre_order(root::Node{T}, children::Dict, parents::Dict, tree_nodes::Vector{Node{T}}) where T
     parent = root
     NodesTree = Node{T}[]
@@ -13,8 +15,6 @@ function pre_order(root::Node{T}, children::Dict, parents::Dict, tree_nodes::Vec
         while children[parent] == [] && nodes_vector != []
             parent = parents[parent]
         end
-
-
     end
     return NodesTree
 end
