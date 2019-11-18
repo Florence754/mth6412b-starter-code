@@ -40,5 +40,5 @@ function prim(G::Graph{T}, root = nodes(G)[1]::Node{T}) where T
          add_edge!(tree, Edge((node, parents[node]), priority(item)))
          node1 = node
      end
-     return tree, parents
+     return tree
  end
