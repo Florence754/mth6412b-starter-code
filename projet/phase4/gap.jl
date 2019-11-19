@@ -5,7 +5,7 @@ function eval_gap(cycle::Graph{T},onetree::Graph{T}, node_weights::Dict, weights
      for edge in edges(cycle)
          cycle_cost += weights[(name(data(edge)[1]), name(data(edge)[2]))]
      end
-     onetree_cost = length(onetree)
+     onetree_cost = cost_graph(onetree)
      sum=0.0
 
      for node in nodes(onetree)
