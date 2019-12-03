@@ -8,9 +8,11 @@ function read_header(filename::String)
   sections = [
     "NAME",
     "TYPE",
+    "COMMENT",
     "DIMENSION",
     "EDGE_WEIGHT_TYPE",
     "EDGE_WEIGHT_FORMAT",
+    "EDGE_DATA_FORMAT",
     "NODE_COORD_TYPE",
     "DISPLAY_DATA_TYPE",
   ]
@@ -39,20 +41,19 @@ Si les coordonnées ne sont pas données, un dictionnaire vide est renvoyé.
 Le nombre de noeuds est dans header["DIMENSION"]."""
 function read_nodes(header::Dict{String}{String}, filename::String)
 
-  nodes = Dict{Int8}{Int8}()
+  nodes = Dict{Int}{Int}()
   node_coord_type = header["NODE_COORD_TYPE"]
   display_data_type = header["DISPLAY_DATA_TYPE"]
+
   file = open(filename, "r")
   dim = parse(Int, header["DIMENSION"])
-
   if !(node_coord_type in ["TWOD_COORDS", "THREED_COORDS"]) &&
      !(display_data_type in ["COORDS_DISPLAY", "TWOD_DISPLAY"])
-     for i in 0:dim-1
+     for i in 1:dim
        nodes[i] = i
      end
     return nodes
   end
-
 
   k = 0
   display_data_section = false
