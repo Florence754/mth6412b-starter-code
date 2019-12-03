@@ -8,6 +8,7 @@ include("onetree.jl")
 include("held_karp.jl")
 include("pre_order.jl")
 include("rsl.jl")
+include("read_stsp1.jl")
 include(joinpath(here,"..","..","shredder","shredder-julia","bin","tools.jl"))
 
 # List of stsp instances
