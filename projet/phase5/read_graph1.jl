@@ -1,5 +1,5 @@
 
-include("read_stsp.jl")
+include("read_stsp1.jl")
 """read_graph_stsp(filename)
 
 Construct a graph from given stsp file.
